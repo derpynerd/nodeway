@@ -8,6 +8,10 @@ export const getUrlRecordById = async (id) => {
   return await UrlRecord.findById(id);
 };
 
+export const getUrlRecordByUrl = async (url) => {
+  return await UrlRecord.find({ originalHref: url });
+};
+
 export const createUrlRecord = async (data) => {
   const newRecord = new UrlRecord(data);
   newRecord.shortenedHref = 'http://localhost:8080/v1/api/short/' + newRecord._id;
@@ -25,6 +29,7 @@ export const deleteUrlRecord = async (id) => {
 export default {
   getAllUrlRecords,
   getUrlRecordById,
+  getUrlRecordByUrl,
   createUrlRecord,
   updateUrlRecord,
   deleteUrlRecord

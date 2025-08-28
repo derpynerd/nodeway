@@ -6,16 +6,19 @@ import urlRoutes from './routes/urlRoutes.js';
 
 dotenv.config();
 
+const domainName = process.env.DOMAIN_NAME;
+const port = process.env.PORT || 3000;
+const contextPath = process.env.CONTEXT_PATH;
+
 const app = express();
-app.use(express.json()); // Parsing JSON body
+app.use(express.json()); // Parse request body as JSON
 
 // Mount url routes
-app.use('/v1/api/', urlRoutes); // Prefix url routes 
+app.use(contextPath, urlRoutes); // Prefix url routes 
 
-const port = process.env.PORT || 3000;
 connectToDB().then(() => {
     app.listen(port, () => {
         console.log(`Server running on port ${port}`);
-        console.log(`Serving requests at http://localhost:${port}/v1/api/`);
+        console.log(`Serving requests at ${domainName}:${port}${contextPath}`);
     });
 })
