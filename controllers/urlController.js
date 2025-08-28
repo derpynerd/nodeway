@@ -23,30 +23,20 @@ export const getUrlRecord = async (req, res) => {
 };
 
 export const createUrlRecord = async (req, res) => {
+  const requestBody = req.body;
+  console.log(`Received request to create short URL for ${requestBody.originalHref}`);
+
   try {
-    const requestBody = req.body;
-    console.log(requestBody);
-    
-    if (!requestBody) {
-      return res.status(400).json({ message: 'Empty request body is invalid' });
-    }
-
-    const { error } = requestSchema.validate(req.body);
-    if (error) {
-      return res.status(422).json({ message: error.message });
-    }
-
-    const existingRecord = await urlService.getUrlRecordByUrl(req.body.originalHref);
-    if (existingRecord) {
+    const result = await urlService.createUrlRecord(req.body);
+    return res.status(201).json(result);
+  } catch (error) {
+    if (error.code === 'DUPLICATE_URL') {
       return res.status(409).json({ message: 'Entry with provided URL already exists' });
     }
-
-    const newRecord = await urlService.createUrlRecord(req.body);
-    return res.status(201).json(newRecord);
-  } catch (error) {
-    console.error('Error creating URL record:', error);
-    res.status(500).json({ error: error.message });
   }
+  
+  console.error('Error creating URL record:', error);
+  return res.status(500).json({ message: 'Internal server error' });
 };
 
 export const updateUrlRecord = async (req, res) => {

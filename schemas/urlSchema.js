@@ -5,6 +5,8 @@ const urlSchema = Joi.object({
     'string.uri': 'originalHref must be a valid URI',
     'any.required': 'originalHref is required'
   })
-});
+})
+.required()
+.strict();
 
 export default urlSchema;
