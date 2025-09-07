@@ -1,4 +1,4 @@
-import urlService from '../services/urlService.js';
+import urlService from '../services/shortenerService.js';
 import requestSchema from '../schemas/urlSchema.js';
 
 export const getAllUrlRecords = async (req, res) => {

@@ -5,7 +5,10 @@
   "description": "Nodeway",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "swagger": "node swagger.js",
+    "dev": "npm run swagger && nodemon app.js",
+    "start": "npm run swagger && node app.js",
+    "docs": "npm run swagger && echo 'Documentation generated successfully!'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,6 +22,8 @@
     "express": "^5.1.0",
     "joi": "^18.0.1",
     "mongoose": "^8.18.0",
-    "nanoid": "^5.1.5"
+    "nanoid": "^5.1.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }
