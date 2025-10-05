@@ -1,0 +1,30 @@
+services:
+  mongo:
+    image: mongo:7-jammy
+    command: mongod --quiet --logpath /dev/null
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - ./tmp:/data/db
+
+  app:
+    build: .
+    command: npm run start
+    env_file: 
+    - .env
+    environment:
+      MONGODB_URI: mongodb://root:root@mongo:27017/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    develop:
+      watch:
+        - action: sync
+          path: ./web
+          target: /src/web
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
