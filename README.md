@@ -21,3 +21,5 @@ Generate shortened URL -> Navigate to shortened URL -> Redirected to original UR
 - ~~Add OpenAPI swagger support~~
 - Add CORS handling at application level
 - Enhance controller/service logic to match swagger specification
+- Add sample request/response & mandatory fields to swagger spec
+- Fix nonworking docker-compose watch configuration
